@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pantalla de Bienvenida</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        .splash-container {
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        h1 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="splash-container">
+        <h1>Visión de la Empresa</h1>
+        <p>Bienvenidos a <strong>MORYSAN</strong>. Nuestra visión es.......</p>
+    </div>
+    <script>
+        const expirationDate = new Date();
+        expirationDate.setDate(expirationDate.getDate() + 7); 
+
+     
+        localStorage.setItem('splashExpiration', expirationDate.toISOString());
+
+       // Verifica si la pantalla debe mostrarse
+        function shouldShowSplash() {
+            const storedDate = localStorage.getItem('splashExpiration');
+            if (storedDate) {
+                const expirationDate = new Date(storedDate);
+                if (new Date() > expirationDate) {
+                    // Expirado
+                    localStorage.removeItem('splashExpiration');
+                    return false;
+                }
+                return true;
+            }
+            return true;
+        }
+
+        // Oculta la pantalla si la fecha de expiración ha pasado
+        if (!shouldShowSplash()) {
+            document.body.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
